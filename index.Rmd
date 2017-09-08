@@ -12,11 +12,56 @@ library(Lahman)
 library(sqldf)
 ```
 
+Type in the following to bring up categories
+in front of you to view, which will help you 
+know the data you are working with:
+  
+colnames(Batting)
+
 Suppose now I would like to see the homerun totals for the 1927 Yankees, I could write the following query:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting 
 WHERE teamID='NYA' and yearID=1927"
+sqldf(query)
+```
+
+To find all instances where Yankees have hit 
+40 homeruns or more, use the following code:
+  
+```{r}
+ query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='NYA' and HR>=30"
+sqldf(query)
+```
+
+To find all instances where a player had 
+more than 40HR but less than 60 strikeouts, 
+first think thusly:  If I look at 
+the options listed under "Batting" then I 
+can assume strikeouts is SO.  Now type 
+in the folliwng code:
+  
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE HR>40 and SO<60"
+sqldf(query)
+```
+
+To find all instances of Phillies 
+in the 1970s hitting more than 30 
+homeruns, we know how to limit the 
+team to Phillies and homeruns to greater 
+than 30, but limiting the years can be 
+difficult.  However, the years column 
+contains numeric values like any other.  
+We need to think of limiting years as 
+limtiting any numeric value.  Hence type 
+in the following code:
+  
+```{r}
+ query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='PHI' and YEARID>=1970 and YEARID<1980 and HR>30"
 sqldf(query)
 ```
 

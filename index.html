@@ -125,6 +125,8 @@ $(document).ready(function () {
 <p>With SQL, you can filter columns and rows by using SELECT and WHERE. Let’s look at an example using the Lahman database. Wee should first load that database along with the package sqldf.</p>
 <pre class="r"><code>library(Lahman)
 library(sqldf)</code></pre>
+<p>Type in the following to bring up categories in front of you to view, which will help you know the data you are working with:</p>
+<p>colnames(Batting)</p>
 <p>Suppose now I would like to see the homerun totals for the 1927 Yankees, I could write the following query:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting 
 WHERE teamID='NYA' and yearID=1927&quot;
@@ -155,7 +157,156 @@ sqldf(query)</code></pre>
 ## 23 shockur01   1927    NYA  0
 ## 24 thomamy01   1927    NYA  0
 ## 25  weraju01   1927    NYA  1</code></pre>
-<p>Now suppose I want to find every instance of a player hitting more than 50 homeruns, and I want the players with the highest homerun total at the top. I could write it thusly:</p>
+<p>To find all instances where Yankees have hit 40 homeruns or more, use the following code:</p>
+<pre class="r"><code> query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='NYA' and HR&gt;=30&quot;
+sqldf(query)</code></pre>
+<pre><code>##     playerID yearID teamID HR
+## 1   ruthba01   1920    NYA 54
+## 2   ruthba01   1921    NYA 59
+## 3   ruthba01   1922    NYA 35
+## 4   ruthba01   1923    NYA 41
+## 5   ruthba01   1924    NYA 46
+## 6  meusebo01   1925    NYA 33
+## 7   ruthba01   1926    NYA 47
+## 8  gehrilo01   1927    NYA 47
+## 9   ruthba01   1927    NYA 60
+## 10  ruthba01   1928    NYA 54
+## 11 gehrilo01   1929    NYA 35
+## 12  ruthba01   1929    NYA 46
+## 13 gehrilo01   1930    NYA 41
+## 14  ruthba01   1930    NYA 49
+## 15 gehrilo01   1931    NYA 46
+## 16  ruthba01   1931    NYA 46
+## 17 gehrilo01   1932    NYA 34
+## 18  ruthba01   1932    NYA 41
+## 19 gehrilo01   1933    NYA 32
+## 20  ruthba01   1933    NYA 34
+## 21 gehrilo01   1934    NYA 49
+## 22 gehrilo01   1935    NYA 30
+## 23 gehrilo01   1936    NYA 49
+## 24 dimagjo01   1937    NYA 46
+## 25 gehrilo01   1937    NYA 37
+## 26 dimagjo01   1938    NYA 32
+## 27 dimagjo01   1939    NYA 30
+## 28 dimagjo01   1940    NYA 31
+## 29 gordojo01   1940    NYA 30
+## 30 dimagjo01   1941    NYA 30
+## 31 henrito01   1941    NYA 31
+## 32 kellech01   1941    NYA 33
+## 33 kellech01   1943    NYA 31
+## 34 kellech01   1946    NYA 30
+## 35 dimagjo01   1948    NYA 39
+## 36 dimagjo01   1950    NYA 32
+## 37 berrayo01   1952    NYA 30
+## 38 mantlmi01   1955    NYA 37
+## 39 berrayo01   1956    NYA 30
+## 40 mantlmi01   1956    NYA 52
+## 41 mantlmi01   1957    NYA 34
+## 42 mantlmi01   1958    NYA 42
+## 43 mantlmi01   1959    NYA 31
+## 44 mantlmi01   1960    NYA 40
+## 45 marisro01   1960    NYA 39
+## 46 mantlmi01   1961    NYA 54
+## 47 marisro01   1961    NYA 61
+## 48 mantlmi01   1962    NYA 30
+## 49 marisro01   1962    NYA 33
+## 50 mantlmi01   1964    NYA 35
+## 51 pepitjo01   1966    NYA 31
+## 52 murcebo01   1972    NYA 33
+## 53 bondsbo01   1975    NYA 32
+## 54 nettlgr01   1976    NYA 32
+## 55 jacksre01   1977    NYA 32
+## 56 nettlgr01   1977    NYA 37
+## 57 jacksre01   1980    NYA 41
+## 58 winfida01   1982    NYA 37
+## 59 winfida01   1983    NYA 32
+## 60 mattido01   1985    NYA 35
+## 61 mattido01   1986    NYA 31
+## 62 mattido01   1987    NYA 30
+## 63 paglimi01   1987    NYA 32
+## 64 tartada01   1993    NYA 31
+## 65 martiti02   1997    NYA 44
+## 66 willibe02   2000    NYA 30
+## 67 martiti02   2001    NYA 34
+## 68 giambja01   2002    NYA 41
+## 69 soriaal01   2002    NYA 39
+## 70 giambja01   2003    NYA 41
+## 71 posadjo01   2003    NYA 30
+## 72 soriaal01   2003    NYA 38
+## 73 matsuhi01   2004    NYA 31
+## 74 rodrial01   2004    NYA 36
+## 75 sheffga01   2004    NYA 36
+## 76 giambja01   2005    NYA 32
+## 77 rodrial01   2005    NYA 48
+## 78 sheffga01   2005    NYA 34
+## 79 giambja01   2006    NYA 37
+## 80 rodrial01   2006    NYA 35
+## 81 rodrial01   2007    NYA 54
+## 82 giambja01   2008    NYA 32
+## 83 rodrial01   2008    NYA 35
+## 84 rodrial01   2009    NYA 30
+## 85 teixema01   2009    NYA 39
+## 86 rodrial01   2010    NYA 30
+## 87 teixema01   2010    NYA 33
+## 88 grandcu01   2011    NYA 41
+## 89 teixema01   2011    NYA 39
+## 90  canoro01   2012    NYA 33
+## 91 grandcu01   2012    NYA 43
+## 92 rodrial01   2015    NYA 33
+## 93 teixema01   2015    NYA 31</code></pre>
+<p>To find all instances where a player had more than 40HR but less than 60 strikeouts, first think thusly: If I look at the options listed under “Batting” then I can assume strikeouts is SO. Now type in the folliwng code:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE HR&gt;40 and SO&lt;60&quot;
+sqldf(query)</code></pre>
+<pre><code>##     playerID yearID teamID HR
+## 1  hornsro01   1922    SLN 42
+## 2  willicy01   1923    PHI 41
+## 3    ottme01   1929    NY1 42
+## 4  gehrilo01   1931    NYA 46
+## 5   ruthba01   1931    NYA 46
+## 6  gehrilo01   1934    NYA 49
+## 7  gehrilo01   1936    NYA 49
+## 8  troskha01   1936    CLE 42
+## 9  dimagjo01   1937    NYA 46
+## 10  mizejo01   1940    SLN 43
+## 11  mizejo01   1947    NY1 51
+## 12 willite01   1949    BOS 43
+## 13 kinerra01   1951    PIT 42
+## 14 camparo01   1953    BRO 41
+## 15 rosenal01   1953    CLE 43
+## 16 kluszte01   1954    CIN 49
+## 17  mayswi01   1954    NY1 41
+## 18 kluszte01   1955    CIN 47
+## 19 aaronha01   1957    ML1 44
+## 20 sievero01   1957    WS1 42
+## 21 aaronha01   1969    ATL 44
+## 22 aaronha01   1971    ATL 47
+## 23 thomafr04   1993    CHA 41
+## 24 bondsba01   2002    SFN 46
+## 25 bondsba01   2003    SFN 45
+## 26 bondsba01   2004    SFN 45
+## 27 pujolal01   2004    SLN 46
+## 28 pujolal01   2006    SLN 49</code></pre>
+<p>To find all instances of Phillies in the 1970s hitting more than 30 homeruns, we know how to limit the team to Phillies and homeruns to greater than 30, but limiting the years can be difficult. However, the years column contains numeric values like any other.<br />
+We need to think of limiting years as limtiting any numeric value. Hence type in the following code:</p>
+<pre class="r"><code> query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='PHI' and YEARID&gt;=1970 and YEARID&lt;1980 and HR&gt;30&quot;
+sqldf(query)</code></pre>
+<pre><code>##    playerID yearID teamID HR
+## 1 johnsde01   1971    PHI 34
+## 2 schmimi01   1974    PHI 36
+## 3 luzingr01   1975    PHI 34
+## 4 schmimi01   1975    PHI 38
+## 5 schmimi01   1976    PHI 38
+## 6 luzingr01   1977    PHI 39
+## 7 schmimi01   1977    PHI 38
+## 8 luzingr01   1978    PHI 35
+## 9 schmimi01   1979    PHI 45</code></pre>
+</div>
+<div id="order-by" class="section level2">
+<h2>ORDER BY</h2>
+<p>With SQL, you can order the rows of your output. Now suppose I want to find every instance of a player hitting more than 50 homeruns, and I want the players with the highest homerun total at the top. I could write it thusly:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID, teamID, yearID, HR FROM Batting
 WHERE HR&gt;50
 ORDER BY HR DESC&quot;
