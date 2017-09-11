@@ -77,4 +77,56 @@ ORDER BY HR DESC"
 sqldf (query)
 ```
 
+If I want to find players who have fewer than 10 strikeouts in a season, yet more than 400 at-bats, I would type in the following:
+
+```{r}
+query<-"SELECT playerID, teamID, yearID, SO, AB  FROM Batting
+WHERE SO<10 and AB>=400
+ORDER BY SO"
+
+sqldf (query)
+```
+
+
+##Aggregation
+
+Now let's take all of Bath Ruth's career homeruns and 
+squash them into one total.  Use the following code:
+
+```{r}
+query<-"SELECT playerID, HR FROM Batting
+WHERE playerID='ruthba01'
+GROUP BY playerID"
+
+sqldf (query)
+```
+
+
+Now let's play with this a little further.
+Use the following code to find the career homerun
+totals for all players who have more than 600
+total career homeruns:
+
+```{r}
+query<-"SELECT playerID, sum(HR) FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>=600
+ORDER BY sum(HR) DESC"
+
+sqldf (query)
+```
+
+Now let's tackle this problem:  Find the players who have
+averaged more than 30 homeruns per year throughout their
+careers, with the highest averages at the top.  To do so,
+type in the following:
+
+```{r}
+query<-"SELECT playerID, avg(HR) FROM Batting
+GROUP BY playerID
+HAVING avg(HR)>30
+ORDER BY avg(HR) DESC"
+
+sqldf (query)
+```
 
