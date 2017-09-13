@@ -130,3 +130,63 @@ ORDER BY avg(HR) DESC"
 sqldf (query)
 ```
 
+
+##Joins
+
+Let's first bring up some basic info on Babe Ruth
+
+```{r}
+query<-"SELECT playerID, teamID, yearID, HR 
+FROM Batting
+WHERE playerID='ruthba01'"
+
+sqldf (query)
+```
+
+If we actually want Buth Ruth's first and last name
+and other information as opposed to a vague playerID,
+we need to do a join.  In this case, the first and 
+last names of a player are in the master table,
+and we want to join these to records from the
+batting table.  It is done thusly:
+
+```{r}
+query<-"SELECT nameFirst, nameLast, teamID, yearID, HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+
+sqldf (query)
+```
+
+Now let's use our knowledge of joins to
+find all instances of players hitting more
+than 50 homeruns.  Except now we want their
+first names, last names, team, year, and homerun
+count.
+
+```{r}
+query<-"SELECT nameFirst, nameLast, teamID, yearID, HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.HR>50"
+
+sqldf (query)
+```
+
+Now let's do an example where we join utilizing both full
+team names as well as player names.
+
+```{r}
+query<-"SELECT nameFirst, nameLast, name, Batting.yearID,
+Batting.HR FROM
+Batting INNER JOIN Teams ON
+Batting.teamID=Teams.teamID
+and Batting.yearID=Teams.yearID
+INNER JOIN Master 
+on Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+
+sqldf (query)
+```
+
